@@ -1,15 +1,5 @@
-from config import DATABASE_CONECTION_URI
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
-class Config:
-    pass
-
-class DevelopmentConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = DATABASE_CONECTION_URI
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'admin'
-    
-
-config = {
-    'development': DevelopmentConfig
-}
+db = SQLAlchemy()
+ma = Marshmallow()
