@@ -11,11 +11,14 @@ class Organization(db.Model):
     logo = db.Column(db.String(45))
     role = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-    def __init__ (self, name, adress, phone, email):
+    def __init__ (self, name, adress, phone, email, user, logo, role):
         self.name = name
         self.adress = adress
         self.phone = phone 
         self.email = email
+        self.user = user   
+        self.logo = logo
+        self.role = role
 
     def __str__(self) -> str:
             return self.name

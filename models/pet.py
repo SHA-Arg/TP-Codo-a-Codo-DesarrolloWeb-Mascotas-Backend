@@ -1,10 +1,14 @@
-from utils.config import db
+from utils.config import db, ma
+from schemas.pets import PetSchema
 
 class Pet(db.Model):
        
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(45))
     pet_type = db.Column(db.Integer , db.ForeignKey('pet_type.id'))
+    race = db.Column(db.String(45))
+    color = db.Column(db.String(45))
+    size = db.Column(db.String(45))
     sex = db.Column(db.String(10))
     age = db.Column(db.Integer)
     vaccine = db.Column(db.String(10))
@@ -12,11 +16,14 @@ class Pet(db.Model):
     health_status = db.Column(db.String(45))
     description = db.Column(db.String(250))
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'))
-    image = db.Column(db.String(45))
+    image = db.Column(db.String(145))
 
-    def __init__(self, name, pet_type, sex, age, vaccine, sterilization, health_status, description, organization, image):
+    def __init__(self, name, pet_type, race, color, size, sex, age, vaccine, sterilization, health_status, description, organization, image):
         self.name = name
         self.pet_type = pet_type
+        self.race = race
+        self.color = color
+        self.size = size
         self.sex = sex
         self.age = age
         self.vaccine = vaccine
@@ -29,6 +36,7 @@ class Pet(db.Model):
     def __str__(self) -> str:
         return self.name
     
-    
+    def schema(self):
+        return PetSchema()
     
     
