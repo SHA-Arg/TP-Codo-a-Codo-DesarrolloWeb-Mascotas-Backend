@@ -37,18 +37,17 @@ def get_organization(id):
 
 @organization.post('/organizaciones')
 def create_organization():
-    id = request.json['id'] 
-    name = request.json['name']
-    adress = request.json['adress']
-    phone = request.json['phone']
-    email = request.json['email'] 
-    user = request.json['user']
-    logo = request.json['logo'] 
-    role = request.json['role']
+    name = request.form['name']
+    adress = request.form['adress']
+    phone = request.form['phone']
+    email = request.form['email'] 
+    user = request.form['user']
+    logo = request.form['logo'] 
+    role = request.form['role']
 
-    new_org = Organization(id, name, adress, phone, email, user, logo, role)
+    new_org = Organization(name = name, adress = adress, phone = phone, email = email, user = user, logo = logo, role = role)
 
     db.session.add(new_org)
     db.session.commit()
 
-    return org_schema.dump(new_org),({})
+    return org_schema.dump(new_org),({'message': 'Organización registrada exitosamente'})
