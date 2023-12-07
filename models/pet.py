@@ -17,8 +17,9 @@ class Pet(db.Model):
     description = db.Column(db.String(250))
     organization = db.Column(db.Integer, db.ForeignKey('organization.id'))
     image = db.Column(db.String(145))
+    ubication = db.Column(db.String(70))
 
-    def __init__(self, name, pet_type, race, color, size, sex, age, vaccine, sterilization, health_status, description, organization, image):
+    def __init__(self, name, pet_type, race, color, size, sex, age, vaccine, sterilization, health_status, description, organization, image, ubication):
         self.name = name
         self.pet_type = pet_type
         self.race = race
@@ -32,6 +33,7 @@ class Pet(db.Model):
         self.description = description
         self.organization = organization
         self.image = image
+        self.ubication = ubication
 
     def __str__(self) -> str:
         return self.name
