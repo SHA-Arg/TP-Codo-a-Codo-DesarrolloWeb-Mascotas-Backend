@@ -87,13 +87,8 @@ def create_pets():
         health_status = request.form['health_status']
         description = request.form['description']
         organization = request.form['organization']
-        image = request.files['image']
-
-        # Toma el nombre del archivo original como entrada y devuelve un nombre de archivo seguro para su almacenamiento.
-        image_add = secure_filename(image.filename)
-
-        # Separa el nombre del archivo de su extensión, considerando el punto como separador.
-        name_base, extension = os.path.splitext(image_add)
+        image = request.form['image']
+        ubication = request.form['ubication']
         
 
         new_pet = Pet(
@@ -110,31 +105,22 @@ def create_pets():
             health_status = health_status, 
             description = description, 
             organization = organization, 
-            image = f"/{folder_img }/{name_base}"
-            
+            image = image, 
+            ubication = ubication
         )
         
         db.session.add(new_pet)
         db.session.commit()
         
-        
-        # Obtiene el ID de la nueva mascota después de guardarla en la base de datos
-        new_pet_id = new_pet.id
+        if any(pet['name'] == name and pet['description'] == description for pet in pet_list):
+            return jsonify({'message': 'Esta mascota ya existe en sus registros'})
 
-        # Construye el nombre de la imagen con el ID
-        name_image = f"pet_{new_pet_id}{extension}"
+        else:
+            db.session.add(new_pet)
+            db.session.commit()
 
-        # Actualiza la ruta de la imagen con el nombre final
-        new_pet.image = f"/{folder_img}/{name_image}"
+            return jsonify([pet_schema.dump(new_pet), {'message': 'Mascota creada exitosamente'}])
 
-        # Guarda la nueva mascota con la ruta de la imagen actualizada
-        db.session.commit()
-
-        # Guarda la imagen
-        image.save(os.path.join(folder_img, name_image))
-
-        return jsonify([pet_schema.dump(new_pet), {'message': 'Mascota creada exitosamente'}])
-    
     except Exception as e:
         return jsonify({'error': str(e)})
     
