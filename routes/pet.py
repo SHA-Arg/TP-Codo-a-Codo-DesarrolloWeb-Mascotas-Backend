@@ -33,7 +33,8 @@ def get_pets():
                 'health_status': pet.health_status, 
                 'description': pet.description, 
                 'organization': pet.organization, 
-                'image': pet.image
+                'image': pet.image,
+                'ubication': pet.ubication
             } 
             for pet in all_pets 
         ]
@@ -74,7 +75,9 @@ def get_pet(id):
 @pets.post('/mascotas')
 def create_pets():
     try:
-        folder_img = current_app.config.get('FOLDER_IMG_PETS', 'public/images/pets')
+        pets = Pet.query.all()
+        pet_list = pet_schemas.dump(pets)
+
         name = request.form['name']
         pet_type = request.form['pet_type']
         race = request.form['race']
@@ -146,7 +149,6 @@ def delete_pet(id):
 @pets.put('/mascotas/<id>')
 def update_pet(id): 
     try:
-        #folder_img = current_app.config.get('FOLDER_IMG_PETS', 'public/images/pets')
         pet = Pet.query.get(id)
 
         if not pet:
