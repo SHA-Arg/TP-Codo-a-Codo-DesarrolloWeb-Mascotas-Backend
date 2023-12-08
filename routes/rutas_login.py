@@ -4,6 +4,8 @@ from utils.funciones import *  # Importando mis Funciones
 
 # Declarando nombre de la aplicación e inicializando, crear la aplicación Flask
 app = Flask(__name__)
+
+
 application = app
 
 

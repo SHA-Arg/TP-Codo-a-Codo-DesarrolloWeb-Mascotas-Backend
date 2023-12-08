@@ -10,10 +10,10 @@ import mysql.connector
 
 def connectionBD():
     mydb = mysql.connector.connect(
-        host="S3B4.mysql.pythonanywhere-services.com",
-        user="S3B4",
+        host="",
+        user="u545683602_Admin",
         passwd="",
-        database="S3B4$login_TP"
+        database="u545683602_PatitasFelices"
     )
     return mydb
     '''       
