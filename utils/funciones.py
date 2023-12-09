@@ -1,5 +1,4 @@
 from flask import session
-from utils.conexionBD import connectionBD
 
 
 # creando una funcion y dentro de la misma una data (un diccionario)

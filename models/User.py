@@ -2,8 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from datetime import datetime
-
-from utils.conexionBD import *  # Importando conexion BD
+# Importando conexion BD
 from utils.funciones import *  # Importando mis Funciones
 from routes import *  # Vistas
 
