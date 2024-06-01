@@ -1,8 +1,9 @@
 from utils.config import db
 
+
 class Organization(db.Model):
-    
-    id = db.Column(db.Integer, primary_key = True)
+
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45))
     adress = db.Column(db.String(45))
     phone = db.Column(db.Integer)
@@ -11,18 +12,15 @@ class Organization(db.Model):
     logo = db.Column(db.String(45))
     role = db.Column(db.Integer, db.ForeignKey('role.id'))
 
-    def __init__ (self, name, adress, phone, email, user, logo, role):
+    def __init__(self, name, adress, phone, email, user, logo, role):
         self.name = name
         self.adress = adress
-        self.phone = phone 
+        self.phone = phone
         self.email = email
-        self.user = user   
+        self.user = user
         self.logo = logo
         self.role = role
 
     def __str__(self) -> str:
-            return self.name
-    
-    pet = db.relationship('Pet', backref = 'organization.id', lazy = True)
-    
-
+        return self.name
+    pet = db.relationship('Pet', backref='organization.id', lazy=True)

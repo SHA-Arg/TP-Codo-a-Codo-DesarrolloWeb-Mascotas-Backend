@@ -11,14 +11,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:ValpoBA1523$@localhost/pat
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-#Configura la variable de la carpeta de imágenes
+# Configura la variable de la carpeta de imágenes
 app.config['FOLDER_IMG_PETS'] = 'public/images/pets'
 
 
 # Asocia la instancia de SQLAlchemy con la aplicación
 db.init_app(app)
 ma.init_app(app)
-
 
 
 # Registra el Blueprint
@@ -29,5 +28,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-
