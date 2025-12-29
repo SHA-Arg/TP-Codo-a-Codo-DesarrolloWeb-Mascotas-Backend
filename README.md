@@ -141,3 +141,10 @@ Sebastian Hereñu Amaral
 
 Edson Yañez
 🔗 https://github.com/edson-yanez-villa
+
+---
+
+⭐ Proyecto desarrollado con fines educativos y de práctica en Python.
+Siempre abierto a sugerencias y mejoras.
+
+---
