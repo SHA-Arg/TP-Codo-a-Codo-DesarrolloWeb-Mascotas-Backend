@@ -1,3 +1,16 @@
+from flask import send_from_directory
+import os
+# --- Rutas para servir el frontend ---
+FRONTEND_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../TP-Codo-a-Codo-DesarrolloWeb-Mascotas'))
+
+@app.route('/')
+def serve_index():
+    return send_from_directory(FRONTEND_FOLDER, 'index.html')
+
+@app.route('/<path:filename>')
+def serve_static_files(filename):
+    # Sirve cualquier archivo directamente (HTML, CSS, JS, imágenes)
+    return send_from_directory(FRONTEND_FOLDER, filename)
 # --- Manejo centralizado de errores ---
 from flask import jsonify
 
