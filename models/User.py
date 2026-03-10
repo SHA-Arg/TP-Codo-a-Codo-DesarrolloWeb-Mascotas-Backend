@@ -10,5 +10,5 @@ class User(db.Model):
         self.email = email
         self.password = password
 
-    organization = db.relationship(
-        'Organization', backref='user.id', lazy=True)
+    organizations = db.relationship(
+        'Organization', backref='user', lazy=True)

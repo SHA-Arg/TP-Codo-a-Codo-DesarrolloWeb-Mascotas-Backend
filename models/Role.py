@@ -11,5 +11,5 @@ class Role(db.Model):
     def __str__(self) -> str:
         return self.name
 
-    organization = db.relationship(
-        'Organization', backref='role.id', lazy=True)
+    organizations = db.relationship(
+        'Organization', backref='role', lazy=True)

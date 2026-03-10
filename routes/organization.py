@@ -53,31 +53,28 @@ def get_organization(id):
 @organization.post('/organizaciones')
 def create_organization():
     try:
-        name = request.form['name']
-        adress = request.form['adress']
-        phone = request.form['phone']
-        email = request.form['email']
-        user = request.form['user']
-        logo = request.form['logo']
-        role = request.form['role']
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'JSON inválido'}), 400
+
+        errors = org_schema.validate(data)
+        if errors:
+            return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
 
         new_org = Organization(
-            name=name,
-            adress=adress,
-            phone=phone,
-            email=email,
-            user=user,
-            logo=logo,
-            role=role
+            name=data.get('name'),
+            adress=data.get('adress'),
+            phone=data.get('phone'),
+            email=data.get('email'),
+            user=data.get('user'),
+            logo=data.get('logo'),
+            role=data.get('role')
         )
-
         db.session.add(new_org)
         db.session.commit()
-
-        return org_schema.dump(new_org), ({'message': 'Organización registrada exitosamente'})
-
+        return jsonify({'organization': org_schema.dump(new_org), 'message': 'Organización registrada exitosamente'}), 201
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'error': str(e)}), 500
 
 
 # Eliminar organización por id
@@ -103,27 +100,23 @@ def delete_organization(id):
 
 @organization.put('/organizaciones/<id>')
 def update_organization(id):
-
-    # folder_img = current_app.config.get('FOLDER_IMG_PETS', 'public/images/pets')
     try:
         organization = Organization.query.get(id)
-
         if not organization:
             return jsonify({'message': 'Organizacion no encontrada'}), 404
 
-        # Usar request.json directamente en lugar de request.get_json()
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'JSON inválido'}), 400
 
-        data = request.form  # request.son en este entorno?
+        errors = org_schema.validate(data, partial=True)
+        if errors:
+            return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
 
-        # Iterar sobre las claves del diccionario y actualizar los atributos correspondientes
         for key, value in data.items():
-            setattr(organization, key, value)
-
+            if hasattr(organization, key):
+                setattr(organization, key, value)
         db.session.commit()
-
-        # Devolver la representación JSON actualizada de la mascota
         return jsonify({'organization': org_schema.dump(organization)})
-
     except Exception as e:
-        # Manejar errores y devolver una respuesta JSON con un código de estado 500
         return jsonify({'error': str(e)}), 500

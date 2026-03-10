@@ -70,56 +70,41 @@ def get_pet(id):
 @pets.post('/mascotas')
 def create_pets():
     try:
-        pets = Pet.query.all()
-        pet_list = pet_schemas.dump(pets)
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'JSON inválido'}), 400
 
-        name = request.form['name']
-        pet_type = request.form['pet_type']
-        race = request.form['race']
-        color = request.form['color']
-        size = request.form['size']
-        sex = request.form['sex']
-        age = request.form['age']
-        vaccine = request.form['vaccine']
-        sterilization = request.form['sterilization']
-        health_status = request.form['health_status']
-        description = request.form['description']
-        organization = request.form['organization']
-        image = request.form['image']
-        ubication = request.form['ubication']
+        # Validar con Marshmallow
+        errors = pet_schema.validate(data)
+        if errors:
+            return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
+
+        # Validar duplicados antes de insertar
+        existing = Pet.query.filter_by(name=data.get('name'), description=data.get('description')).first()
+        if existing:
+            return jsonify({'message': 'Esta mascota ya existe en sus registros'}), 409
 
         new_pet = Pet(
-
-            name=name,
-            pet_type=pet_type,
-            race=race,
-            color=color,
-            size=size,
-            sex=sex,
-            age=age,
-            vaccine=vaccine,
-            sterilization=sterilization,
-            health_status=health_status,
-            description=description,
-            organization=organization,
-            image=image,
-            ubication=ubication
+            name=data.get('name'),
+            pet_type=data.get('pet_type'),
+            race=data.get('race'),
+            color=data.get('color'),
+            size=data.get('size'),
+            sex=data.get('sex'),
+            age=data.get('age'),
+            vaccine=data.get('vaccine'),
+            sterilization=data.get('sterilization'),
+            health_status=data.get('health_status'),
+            description=data.get('description'),
+            organization=data.get('organization'),
+            image=data.get('image'),
+            ubication=data.get('ubication')
         )
-
         db.session.add(new_pet)
         db.session.commit()
-
-        if any(pet['name'] == name and pet['description'] == description for pet in pet_list):
-            return jsonify({'message': 'Esta mascota ya existe en sus registros'})
-
-        else:
-            db.session.add(new_pet)
-            db.session.commit()
-
-            return jsonify([pet_schema.dump(new_pet), {'message': 'Mascota creada exitosamente'}])
-
+        return jsonify({'pet': pet_schema.dump(new_pet), 'message': 'Mascota creada exitosamente'}), 201
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'error': str(e)}), 500
 
 
 # Eliminar mascota por id
@@ -144,23 +129,21 @@ def delete_pet(id):
 def update_pet(id):
     try:
         pet = Pet.query.get(id)
-
         if not pet:
             return jsonify({'message': 'Mascota no encontrada'}), 404
 
-        # Usar request.json directamente en lugar de request.get_json()
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'JSON inválido'}), 400
 
-        data = request.form
+        errors = pet_schema.validate(data, partial=True)
+        if errors:
+            return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
 
-        # Iterar sobre las claves del diccionario y actualizar los atributos correspondientes
         for key, value in data.items():
-            setattr(pet, key, value)
-
+            if hasattr(pet, key):
+                setattr(pet, key, value)
         db.session.commit()
-
-        # Devolver la representación JSON actualizada de la mascota
         return jsonify({'pet': pet_schema.dump(pet)})
-
     except Exception as e:
-        # Manejar errores y devolver una respuesta JSON con un código de estado 500
         return jsonify({'error': str(e)}), 500
