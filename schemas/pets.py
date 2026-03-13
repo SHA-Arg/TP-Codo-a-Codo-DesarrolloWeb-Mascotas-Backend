@@ -4,7 +4,7 @@ from marshmallow import fields, validate
 class PetSchema(ma.Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=validate.Length(min=1, max=45))
-    pet_type = fields.Int(required=True)
+    pet_type = fields.Int(required=True, attribute='pet_type_id')
     race = fields.Str(validate=validate.Length(max=45))
     color = fields.Str(validate=validate.Length(max=45))
     size = fields.Str(validate=validate.Length(max=45))
@@ -14,7 +14,7 @@ class PetSchema(ma.Schema):
     sterilization = fields.Bool()
     health_status = fields.Str(validate=validate.Length(max=45))
     description = fields.Str(validate=validate.Length(max=250))
-    organization = fields.Int(required=True)
+    organization = fields.Int(required=True, attribute='organization_id')
     image = fields.Str(validate=validate.Length(max=145))
     ubication = fields.Str(validate=validate.Length(max=70))
 

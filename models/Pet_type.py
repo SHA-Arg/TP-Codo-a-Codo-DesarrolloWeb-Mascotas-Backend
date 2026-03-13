@@ -11,5 +11,3 @@ class Pet_type(db.Model):
 
     def __str__(self) -> str:
         return self.name
-
-    pets = db.relationship('Pet', backref='pet_type', lazy=True)

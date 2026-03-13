@@ -76,7 +76,7 @@ Clonar el repositorio
 
 ```bash
 git clone https://github.com/SHA-Arg/TP-Codo-a-Codo-DesarrolloWeb-Mascotas-Backend.git
-cd TP-Codo-a-Codo-DesarrolloWeb-Mascotas-Backend
+cd DesarrolloWeb-Mascotas-Backend
 ```
 
 Instalar dependencias
@@ -107,16 +107,10 @@ Los principales endpoints que provee esta API incluyen (según estructura de rut
 
 🧠 ¿Cómo se integra con el Frontend?
 
-Este backend provee datos y lógica para el frontend del proyecto Patitas Felices, alojado en:
-
-🔗 https://github.com/SHA-Arg/TP-Codo-a-Codo-DesarrolloWeb-Mascotas
-
 El frontend hace fetch API requests a los endpoints listados arriba para mostrar y actualizar información en la interfaz de usuario.
 GitHub
 
-📌 Buenas prácticas y aprendizajes
-
-Con este proyecto pusiste en práctica:
+📌 Buenas prácticas
 
 ✔️ Desarrollo de APIs con Flask ✔️
 ✔️ Gestión de rutas y lógica backend ✔️
@@ -124,23 +118,12 @@ Con este proyecto pusiste en práctica:
 ✔️ Integración frontend-backend desplegada ✔️
 ✔️ Uso de Git para control de versiones ✔️
 
-Este tipo de proyectos es excelente para aprender cómo construir y mantener un backend funcional para aplicaciones web.
-4Geeks
-
-👤 Autores
-Andrea Jiménez Espinoza
-🔗 https://github.com/andreajimeneze
-
-Sofía Egaña Jiménez
-🔗 https://github.com/SofiaInSilico
+👤 Autor
 
 Sebastian Hereñu Amaral
 🔗 https://github.com/SHA-Arg
 
 🌐 Portfolio: https://sha-arg.github.io
-
-Edson Yañez
-🔗 https://github.com/edson-yanez-villa
 
 ---
 

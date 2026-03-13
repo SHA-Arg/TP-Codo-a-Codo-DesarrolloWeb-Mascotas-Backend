@@ -23,4 +23,3 @@ class Organization(db.Model):
 
     def __str__(self) -> str:
         return self.name
-    pets = db.relationship('Pet', backref='organization', lazy=True)

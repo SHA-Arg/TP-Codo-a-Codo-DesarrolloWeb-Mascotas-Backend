@@ -3,54 +3,50 @@ from models import Organization
 from utils.config import db
 from schemas.organization import org_schema
 
-organization = Blueprint('/organizaciones', __name__)
+organization_bp = Blueprint('/organizaciones', __name__)
 
 
-@organization.get('/organizaciones')
+@organization_bp.get('/organizaciones')
 def get_organizations():
     try:
         all_organizations = Organization.query.all()
         org_list = [
             {
-                'id': organization.id,
-                'name': organization.name,
-                'adress': organization.adress,
-                'phone': organization.phone,
-                'email': organization.email,
-                'user': organization.user,
-                'logo': organization.logo,
-                'role': organization.role
+                'id': org.id,
+                'name': org.name,
+                'adress': org.adress,
+                'phone': org.phone,
+                'email': org.email,
+                'user': org.user,
+                'logo': org.logo,
+                'role': org.role
             }
-
-            for organization in all_organizations
+            for org in all_organizations
         ]
         if not all_organizations:
             return jsonify({'message': 'Todavía no hay organizaciones registradas'}), 404
 
-        else:
-            return jsonify({'organizations': org_list})
+        return jsonify({'organizations': org_list})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
-@organization.get('/organizaciones/<id>')
+@organization_bp.get('/organizaciones/<id>')
 def get_organization(id):
     try:
+        org = Organization.query.get(id)
 
-        organization = Organization.query.get(id)
+        if org:
+            return jsonify({'organization': org_schema.dump(org)})
 
-        if organization:
-            return jsonify({'organization': org_schema.dump(organization)})
-
-        else:
-            return jsonify({'message': 'Organización no encontrada'}), 404
+        return jsonify({'message': 'Organización no encontrada'}), 404
 
     except Exception as e:
         return jsonify({'error': str(e)})
 
 
-@organization.post('/organizaciones')
+@organization_bp.post('/organizaciones')
 def create_organization():
     try:
         data = request.get_json()
@@ -77,32 +73,28 @@ def create_organization():
         return jsonify({'error': str(e)}), 500
 
 
-# Eliminar organización por id
-@organization.delete('/organizaciones/<id>')
+@organization_bp.delete('/organizaciones/<id>')
 def delete_organization(id):
-
     try:
-        organization = Organization.query.get(id)
+        org = Organization.query.get(id)
 
-        if not organization:
+        if not org:
             return jsonify({'message': 'Organizacion no encontrada'}), 404
 
-        db.session.delete(organization)
+        db.session.delete(org)
         db.session.commit()
 
-        return jsonify({'organization': org_schema.dump(organization), 'message': 'Organizacion eliminada exitosamente'}), 200
+        return jsonify({'organization': org_schema.dump(org), 'message': 'Organizacion eliminada exitosamente'}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)})
 
 
-# versión no probada de UPDATE:
-
-@organization.put('/organizaciones/<id>')
+@organization_bp.put('/organizaciones/<id>')
 def update_organization(id):
     try:
-        organization = Organization.query.get(id)
-        if not organization:
+        org = Organization.query.get(id)
+        if not org:
             return jsonify({'message': 'Organizacion no encontrada'}), 404
 
         data = request.get_json()
@@ -114,9 +106,9 @@ def update_organization(id):
             return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
 
         for key, value in data.items():
-            if hasattr(organization, key):
-                setattr(organization, key, value)
+            if hasattr(org, key):
+                setattr(org, key, value)
         db.session.commit()
-        return jsonify({'organization': org_schema.dump(organization)})
+        return jsonify({'organization': org_schema.dump(org)})
     except Exception as e:
         return jsonify({'error': str(e)}), 500

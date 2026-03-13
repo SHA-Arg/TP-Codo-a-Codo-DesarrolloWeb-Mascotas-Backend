@@ -21,7 +21,7 @@ def get_pets():
             {
                 'id': pet.id,
                 'name': pet.name,
-                'pet_type': pet.pet_type,
+                'pet_type': pet.pet_type_id,
                 'race': pet.race,
                 'color': pet.color,
                 'size': pet.size,
@@ -31,7 +31,7 @@ def get_pets():
                 'sterilization': pet.sterilization,
                 'health_status': pet.health_status,
                 'description': pet.description,
-                'organization': pet.organization,
+                'organization': pet.organization_id,
                 'image': pet.image,
                 'ubication': pet.ubication
             }
@@ -86,7 +86,7 @@ def create_pets():
 
         new_pet = Pet(
             name=data.get('name'),
-            pet_type=data.get('pet_type'),
+            pet_type_id=data.get('pet_type'),
             race=data.get('race'),
             color=data.get('color'),
             size=data.get('size'),
@@ -96,7 +96,7 @@ def create_pets():
             sterilization=data.get('sterilization'),
             health_status=data.get('health_status'),
             description=data.get('description'),
-            organization=data.get('organization'),
+            organization_id=data.get('organization'),
             image=data.get('image'),
             ubication=data.get('ubication')
         )
@@ -141,8 +141,10 @@ def update_pet(id):
             return jsonify({'error': 'Datos inválidos', 'details': errors}), 400
 
         for key, value in data.items():
-            if hasattr(pet, key):
-                setattr(pet, key, value)
+            fk_map = {'pet_type': 'pet_type_id', 'organization': 'organization_id'}
+            actual_key = fk_map.get(key, key)
+            if hasattr(pet, actual_key):
+                setattr(pet, actual_key, value)
         db.session.commit()
         return jsonify({'pet': pet_schema.dump(pet)})
     except Exception as e:

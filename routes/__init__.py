@@ -1,2 +1,2 @@
 from .pet import pets
-from .organization import organization
+from .organization import organization_bp
