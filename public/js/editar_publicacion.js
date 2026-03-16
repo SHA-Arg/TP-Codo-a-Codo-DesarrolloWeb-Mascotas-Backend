@@ -1,24 +1,21 @@
-import { getDataById, updateData } from "./utils.js";
 
+import { getDataById, updateData, API_URL } from "./utils.js";
 const registerForm = document.forms["adopt-form"];
-
 const params = new URLSearchParams(window.location.search);
 const petId = params.get("id");
 
-
 const loadPet = async () => {
-	const data = await getDataById("https://s3b4.pythonanywhere.com/mascotas", petId);
+	const data = await getDataById(API_URL, petId);
 	const pet = data.pet;
 	updateForm(pet);
 };
 
-
 registerForm.onsubmit = async (e) => {
 	e.preventDefault();
 	const valuesForm = getFormValues();
-	await updateData("https://s3b4.pythonanywhere.com/mascotas", petId, valuesForm);
+	await updateData(API_URL, petId, valuesForm);
 	window.location.href = "../pages/dashboard.html";
-};
+}
 
 const getFormValues = () => {
 	const values = {

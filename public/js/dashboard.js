@@ -1,9 +1,9 @@
-import { deleteData } from "./utils.js";
 
-const url = "https://s3b4.pythonanywhere.com/mascotas";
+import { deleteData, API_URL } from "./utils.js";
+const url = API_URL;
 
 export async function recuperarData() {
-	const response = await fetch(url);
+    const response = await fetch(url);
 	try {
 		if (response.ok) {
 			const DATA = await response.json();

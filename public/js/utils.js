@@ -1,4 +1,7 @@
-const postData = async (url, data) => {
+// URL global del backend
+const API_URL = "https://s3b4.pythonanywhere.com/mascotas";
+
+const postData = async (url = API_URL, data) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify(data);
@@ -11,7 +14,7 @@ const postData = async (url, data) => {
     return await fetch(url, requestOptions)
 }
 
-const getDataById = async (url, id) => {
+const getDataById = async (url = API_URL, id) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const requestOptions = {
@@ -25,7 +28,7 @@ const getDataById = async (url, id) => {
     return data
 }
 
-const updateData = async (url, id, data) => {
+const updateData = async (url = API_URL, id, data) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify(data);
@@ -39,7 +42,7 @@ const updateData = async (url, id, data) => {
     return await response.json()
 }
 
-const deleteData = async (url, id) => {
+const deleteData = async (url = API_URL, id) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const requestOptions = {

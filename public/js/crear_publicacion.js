@@ -1,16 +1,12 @@
-import { postData } from "./utils.js";
 
+import { postData, API_URL } from "./utils.js";
 const registerForm = document.forms["adopt-form"];
-
 
 registerForm.onsubmit = async (e) => {
 	e.preventDefault();
-
 	const valuesForm = getFormValues();
 	clearForm();
-
-	await postData("https://s3b4.pythonanywhere.com/mascotas", valuesForm);
-
+	await postData(API_URL, valuesForm);
 	window.location.href = "../pages/dashboard.html";
 };
 

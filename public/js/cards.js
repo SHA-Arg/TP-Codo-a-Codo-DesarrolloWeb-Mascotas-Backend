@@ -1,4 +1,5 @@
-    const response = await fetch("https://s3b4.pythonanywhere.com/mascotas");
+    import { API_URL } from "./utils.js";
+    const response = await fetch(API_URL);
 	try {
 		if (response.ok) {
 			const DATA = await response.json();

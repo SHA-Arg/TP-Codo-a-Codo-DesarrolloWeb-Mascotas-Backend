@@ -1,7 +1,8 @@
+import { API_URL } from "./utils.js";
 async function getMascota(idPet) {
-	const response = await fetch(
-		`https://s3b4.pythonanywhere.com/mascotas/${idPet}`
-	);
+    const response = await fetch(
+        `${API_URL}/${idPet}`
+    );
 	try {
 		if (response.ok) {
 			const DATA = await response.json();

@@ -7,33 +7,27 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function createHeader() {
-	let headerCode = "";
-
-	headerCode = `<div class="brand"><a href="/index.html"><img
-				href="/index.html"
-				class="logo"
-				src="../img/logo_2.png"
-				alt="Logo Patitas Felices"/img></a>
-				<p class="brand_logo">Patitas Felices</p></div>
-
-			<input type="checkbox" id="check" />
-			
-			<label for="check" class="menu">
-				<a href="/pages/login.html" style="--i: 6"><i id="menu_log" class="bx bxs-user"></i></a></i>
-				<i class="bx bx-menu" id="menu-icon"></i>
-				<i class="bx bx-x" id="close-icon"></i>
-			</label>
-
-			<nav class="navbar">
-				<a href="/pages/cards.html" style="--i: 0">Mascotas</a>
-				<a href="/pages/nosotros.html" style="--i: 1">Nosotros</a>
-				<a href="/pages/organizaciones.html" style="--i: 2">Organizaciones</a>
-				<a href="/pages/contacto.html" style="--i: 3">Contacto</a>	
-				<a href="/pages/dashboard.html" style="--i: 4">Dashboard</a>	
-				<a href="/pages/login.html" style="--i: 5"><i id="icon_log" class="bx bxs-user"></i></a></i>			
-			</nav>`;
-
-	return headerCode;
+	return `
+	<nav class="navbar">
+		<div class="navbar-brand">
+			<a href="/index.html"><img class="logo" src="../img/logo_2.png" alt="Logo Patitas Felices"></a>
+			<span class="brand_logo">Patitas Felices</span>
+		</div>
+		<input type="checkbox" id="menu-toggle" class="menu-toggle" />
+		<label for="menu-toggle" class="menu-icon">
+			<i class="bx bx-menu"></i>
+			<i class="bx bx-x"></i>
+		</label>
+		<div class="navbar-links">
+			<a href="/pages/cards.html">Mascotas</a>
+			<a href="/pages/nosotros.html">Nosotros</a>
+			<a href="/pages/organizaciones.html">Organizaciones</a>
+			<a href="/pages/contacto.html">Contacto</a>
+			<a href="/pages/dashboard.html">Dashboard</a>
+			<a href="/pages/login.html" class="navbar-login-btn"><i class="bx bxs-user"></i> Iniciar sesión</a>
+		</div>
+	</nav>
+	`;
 }
 
 function createFooter() {
